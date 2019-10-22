@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+char str[100];
+char str1[100]; 
+int i=0,j=0;
+printf("enter string str\n");
+scanf("%s",str);
+printf("enter string str1\n");
+scanf("%s",str1);
+
+while(str[i]!='\0')
+i++;
+while(str1[j]!='\0')
+
+{
+str[i]=str1[j];
+i++;
+j++;
+}
+str[i]='\0';
+printf("output is %s\n",str);
+return 0;
+}
