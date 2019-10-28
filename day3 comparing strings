@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int i,j,len1,len2;
+char str[100],str1[100];
+printf("enetr the string1\n");
+scanf("%[^\n]%*c",str);
+printf("enetr the string2\n");
+scanf("%[^\n]%*c",str1);
+for(len1=0;str[len1]!='\0';len1++);
+
+for(len2=0;str1[len2]!='\0';len2++);
+
+if(len1<len2)
+{
+printf("strings are not equal and str1 less than str2\n");
+}
+else if(len1>len2)
+{
+printf("strings are not equal str1 greater than str2\n");
+}
+else if(len1==len2)
+{
+printf("strings are str1 length equal to str2 length \n");
+
+i=0;
+while(str[i]==str1[i]&&str[i]!='\0')
+
+i++;
+if(i==len1)
+{
+printf(" two strings equal");
+}
+else
+{
+printf("not equal");
+}
+}
+return 0;
+}
