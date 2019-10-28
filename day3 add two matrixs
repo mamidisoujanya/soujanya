@@ -9,34 +9,30 @@ scanf("%d",&r);
 printf("enter the column size \n ");
 scanf("%d",&c);
 
-printf("enter the array1 elements \n ");
+printf("enter the matrix1 elements \n ");
 for(i=0;i<r;i++)
   for(j=0;j<c;j++)
   
-  scanf("%d ",&a[i][j]);
+  scanf("%d",&a[i][j]);
   
-printf("enter the array2 elements \n ");
+printf("enter the matrix12 elements \n ");
 for(i=0;i<r;i++)
   for(j=0;j<c;j++)
   
   scanf("%d",&b[i][j]);
 
-for(i=0;i<r;i++)
-  for(j=0;j<c;j++)
-   
-   add[i][j]=a[i][j]+b[i][j];
+printf("after adding  two matrix's :\n");
 
-printf("after adding  two arrays :\n");
-for(i=0;i<r;i++){
+for(i=0;i<r;i++)
+{
   for(j=0;j<c;j++)
   {
+   
+   add[i][j]=a[i][j]+b[i][j];
    printf("%d\t",add[i][j]);
-    if(j==c-1) 
-     {
-           
-    printf("\n\n");
-     }
    }
-}
+    printf("\n\n");
+ }
+   
 return 0;
 }
