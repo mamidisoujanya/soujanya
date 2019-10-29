@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int n,num,newnum ,num2,n2;
+printf("enter the num value\n");
+scanf("%d",&num); 
+
+printf("enter the n value which position set\n");
+scanf("%d",&n); 
+
+newnum=(1<<n)|num;
+
+printf("newnumber is %d",newnum);
+
+//*-----reset the bit
+
+printf("\nenter the n2 value which position reset\n");
+scanf("%d",&n2); 
+
+num2=~(1<<n2)&num;
+
+printf("\nafter reset the num2 is:%d\n",num2);
+return 0;
+}
