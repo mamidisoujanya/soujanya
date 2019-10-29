@@ -16,26 +16,27 @@ if(len1<len2)
 {
 printf("strings are not equal and str1 less than str2\n");
 }
-else if(len1>len2)
-{
-printf("strings are not equal str1 greater than str2\n");
-}
-else if(len1==len2)
-{
-printf("strings are str1 length equal to str2 length \n");
+  else if(len1>len2)
+  {
+  printf("strings are not equal str1 greater than str2\n");
+  }
+    else if(len1==len2)
+    {
+    printf("strings are str1 length equal to str2 length \n");
 
-i=0;
-while(str[i]==str1[i]&&str[i]!='\0')
-
-i++;
-if(i==len1)
-{
-printf(" two strings equal");
-}
-else
-{
-printf("not equal");
-}
-}
+    i=0;
+    while(str[i]==str1[i]&&str[i]!='\0')
+    {
+    i++;
+    }
+      if(i==len1)
+      {
+      printf("two strings data also same");
+      }
+        else
+        {
+      printf("data different");
+        }
+    }
 return 0;
 }
