@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+int data;
+struct node *next;
+};
+void addatbegin(struct node** head,int newdata)
+{
+struct node *newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=newdata;
+newnode->next=(*head);
+(*head)=newnode;
+}
+
+void removenode(struct node **head,int key)
+{
+struct node *temp=*head,*prev;
+	if(temp!=NULL && temp->data==key)
+	{
+	*head=temp->next;
+	free(head);
+	return ;
+	}
+		while(temp!=NULL && temp->data!=key)
+		{
+		prev=temp;
+		temp=temp->next;
+		}
+			if(temp==NULL)
+			return;
+			prev->next=temp->next;
+			free(temp);
+}
+
+void disp(struct node *head)
+{
+	struct node *s=head;
+	while(s!=NULL)
+	{
+	printf("%d",s->data);
+
+	s=s->next;
+	}
+}
+int main()
+{
+struct node *head=NULL;
+addatbegin(&head,3);
+addatbegin(&head,2);
+addatbegin(&head,4);
+addatbegin(&head,1);
+printf("before removing the node\n");
+disp(head);
+printf("\nafter deleting the node\n");
+removenode(&head,3);
+disp(head);
+return 0;
+}
