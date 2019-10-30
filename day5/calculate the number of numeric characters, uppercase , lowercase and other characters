@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+char str[50],num=0,upper=0,lower=0,special=0,i;
+
+printf("enter the string\n");
+scanf("%[^\n]%*c",str);
+
+for(i=0;str[i]!='\0';i++)
+{
+  if(str[i]>='0' && str[i]<='9')
+  {
+  num++;
+  }
+    else if(str[i]>='A' && str[i]<='Z')
+    {
+    upper++;
+    }
+      else if(str[i]>='a' && str[i]<='z')
+      {
+      lower++;
+      }
+      else
+      special++;
+}
+printf("num=%d upper=%d lower=%d special=%d",num,upper,lower,special);
+return 0;
+}
