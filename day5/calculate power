@@ -1,0 +1,20 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int a,b,result=1,i;
+
+printf("enter the a is base value\n");
+scanf("%d",&a);
+
+printf("enter the b value is power \n");
+scanf("%d",&b);
+
+for(i=1;i<=b;i++)
+{
+result=result*a;
+}
+
+printf("a rise to the power b is:%d\n",result);
+return 0;
+}
