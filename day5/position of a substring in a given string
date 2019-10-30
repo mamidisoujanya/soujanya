@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+char str[50],str1[50];
+int i,j,flag,l;
+printf("enter main string\n");
+ scanf("%[^\n]%*c",str);
+
+printf("sub string\n");
+ scanf("%[^\n]%*c",str1);
+
+for(l=0;str1[l]!='\0';l++);
+
+for(i=0,j=0;str[i]!='\0' && str1[j]!='\0';i++)
+{
+	if(str[i]==str1[j])
+		{
+		j++;
+		}
+	else
+ 	{
+	j=0;	
+	}
+}
+if(j==l)
+printf("substring found at position %d",i-j+1);
+else
+printf("sub string not found");
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
