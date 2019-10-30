@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int n,b,sum=0,i,rem;
+
+printf("enter the a value\n");
+scanf("%d",&n);
+
+  while(n>0)
+  {
+  rem=n%10;
+  sum=sum+rem;
+  n=n/10;
+  }
+  
+if(sum==6)
+  printf("sum of digits in given number is equal to 6");
+  
+    else
+      printf("sum of digits in given number is not equal to 6");
+return 0;
+}
