@@ -4,7 +4,7 @@ int main()
 {
 float cel,fh;
 int i;
-printf("enter the i value\n");
+printf("enter the i value to choose to caliculate the temparature i=1 means temp in Fahrenheit and i=2 temp in celsius  \n");
 scanf("%d",&i);
   if(i==1)
   {
