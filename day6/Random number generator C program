@@ -13,7 +13,7 @@ scanf("%d%d",&a,&j);
 printf("n,a,j values deside random numbers \n");
 for(i=1;i<n2;i++)
 {
-a=(a*n%j)+i;
+a=a+(a*n%j)+i;
 printf("%d\n",a);
 //if(a>=62)
 
