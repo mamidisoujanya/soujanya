@@ -1,0 +1,18 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+int *f,n,i;
+
+printf("enter the n value\n");
+scanf("%d",&n);
+
+*f=1;
+for(i=1;i<=n;i++)
+{
+*f=*f*i;
+}
+printf("factorial of num %d is %d\n",n,*f);
+return 0;
+}
