@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+int data;
+struct node *next;
+};
+void addatbegin(struct node** head,int newdata)
+{
+struct node *newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=newdata;
+newnode->next=(*head);
+(*head)=newnode;
+}
+void sorting(struct node *head)
+{
+struct node *ptr,*nptr;
+int temp;
+ptr=head;
+while(ptr->next!=NULL)
+{
+nptr=ptr->next;
+	while(nptr!=NULL)
+	{
+		if(ptr->data>nptr->data)
+		{
+		temp=ptr->data;
+		ptr->data=nptr->data;
+		nptr->data=temp;
+		}
+	nptr=nptr->next;
+	}
+ptr=ptr->next;
+}
+}
+void disp(struct node *head)
+{
+	struct node *s=head;
+	while(s!=NULL)
+	{
+	printf("%d",s->data);
+
+	s=s->next;
+	}
+}
+int main()
+{
+struct node *head=NULL;
+addatbegin(&head,8);
+addatbegin(&head,2);
+addatbegin(&head,4);
+addatbegin(&head,1);
+printf("before removing\n");
+disp(head);
+printf("\naftersorting\n");
+sorting(head);
+disp(head);
+return 0;
+}
+
+
