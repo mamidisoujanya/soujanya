@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+int a,i,j,n,n2;
+printf("enter the n2 value it represents how many random numbers you want\n");
+scanf("%d",&n2);
+printf("enter the n value\n");
+scanf("%d",&n);
+printf("enter the a and j value \n");
+scanf("%d%d",&a,&j);
+printf("n,a,j values deside random numbers \n");
+for(i=1;i<n2;i++)
+{
+a=(a*n%j)+i;
+printf("%d\n",a);
+//if(a>=62)
+
+//a=0;
+
+}
+return 0;
+}
