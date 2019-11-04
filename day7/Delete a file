@@ -1,0 +1,16 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+int checkfile;
+char fname[50];
+
+printf("enter file name which one you want delete\n");
+scanf("%s",fname);
+checkfile=remove(fname);
+if(checkfile==0)
+printf("%s file deleted successfully\n",fname);
+else
+printf("unable to delete the file");
+return 0;
+}
