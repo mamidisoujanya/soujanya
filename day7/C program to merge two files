@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+FILE *fp1,*fp2,*fp3;
+char c,fname1[20], fname2[20], fname3[30];
+printf("Enter first file name\n");
+scanf("%s",fname1);
+
+printf("Enter second file name\n");
+scanf("%s",fname2);
+
+printf("Enter 3rd file name it stores two files\n");
+scanf("%s",fname3);
+ 
+fp1=fopen(fname1,"r");
+fp2=fopen(fname2,"r");
+
+if(fp1==NULL||fp2==NULL)
+{
+	printf("could not open files");
+}
+
+fp3=fopen(fname3,"w");
+if(fp3==NULL)
+{
+	printf("could not open files");
+}
+
+while((c=fgetc(fp1))!=EOF)
+{
+	fputc(c,fp3);
+}
+
+while((c=fgetc(fp2))!=EOF)
+{
+	fputc(c,fp3);
+}
+
+printf("merged file 1 and 2 into %s",fname3);
+fclose(fp1);
+fclose(fp2);
+fclose(fp3);
+return 0;
+}
