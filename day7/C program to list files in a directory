@@ -1,0 +1,22 @@
+#include<stdio.h>
+#include<dirent.h>
+void listfiles(const char *path)
+{
+struct dirent *dp;
+DIR *dir =opendir(path);
+if(!dir)
+return;
+while((dp=readdir(dir))!=NULL)
+{
+printf("%s\n",dp->d_name);
+}
+closedir(dir);
+}
+int main()
+{
+char path[100];
+printf("enter path to list files\n");
+scanf("%s",path);
+listfiles(path);
+return 0;
+}
