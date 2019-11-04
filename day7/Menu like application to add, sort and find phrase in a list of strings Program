@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void addstring()
+{
+char str[100],str1[100];
+	int i,j,l;
+	printf("enter the string str\n");
+	scanf("%[^\n]%*c",str);
+	printf("enter the string str1\n");
+	scanf("%[^\n]%*c",str1);
+
+for(l=0;str[l]!='\0';l++);
+for(i=l,j=0;str1[j]!=0;i++,j++)
+	{
+		str[i]=str1[j];
+	}
+printf("after adding the string\n");
+printf("%s",str);
+}
+
+void sort()
+{
+char str[50];
+char temp;
+int i,j=0,k;
+printf("enter the string\n");
+scanf("%s",str);
+while(str[j]!='\0')
+j++;
+for(i=1;i<j;i++)
+for(k=0;k<j-i;k++)
+
+if(str[k]>str[k+1])
+{
+temp=str[k];
+str[k]=str[k+1];
+str[k+1]=temp;
+}
+printf("sorting string is %s\n",str);
+}
+
+void findphrase()
+{
+char str[50],str1[50];
+int i,j,flag,l;
+printf("enter main string\n");
+ scanf("%[^\n]%*c",str);
+//scanf("%s",str);
+
+printf("sub string\n");
+ scanf("%[^\n]%*c",str1);
+
+for(l=0;str1[l]!='\0';l++);
+
+for(i=0,j=0;str[i]!='\0' && str1[j]!='\0';i++)
+{
+	if(str[i]==str1[j])
+		{
+		j++;
+		
+		}
+	else
+	{
+	j=0;	
+	}
+}
+if(j==l)
+printf("substring found \n");
+else
+printf("sub string not found");
+
+}
+
+int main()
+{
+	int choice;
+	printf("enter 1:for add string\n");
+	printf("enter 3:for sort string\n");
+	printf("enter 4:for find phrase string\n");
+	scanf("%d",&choice);
+if(choice==1)
+{
+
+	addstring();
+	}
+
+else if(choice==3)
+{
+sort();
+}
+else if(choice==4)
+{
+
+findphrase();
+}
+else
+{
+printf("invalid choice enter");
+}
+return 0;
+}
