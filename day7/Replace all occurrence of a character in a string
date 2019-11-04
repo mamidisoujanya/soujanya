@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+char str[50],str1[50];
+char ch,newch;
+int i;
+printf("enter string\n");
+ scanf("%[^\n]%*c",str);
+
+printf("enter the chracter which you want replace\n");
+scanf("%c",&ch);
+
+printf("enter the new character\n");
+scanf("%s",&newch);
+printf("befor replace new character %s\n",str);
+
+for(i=0;str[i]!='\0';i++)
+{
+	if(str[i]==ch)
+		{
+		str[i]=newch;
+		}
+
+}
+printf("\nafter replacing the new character :%s\n",str);
+return 0;
+}
