@@ -19,5 +19,6 @@ printf("enter the string\n");
 scanf("%[^\n]%*c",str);
 c=findlength(str);
 printf("\nlength of string is:%d\n",c);
+main();
 return 0;
 }
