@@ -1,0 +1,71 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define SIZE 100
+char* base64decoder(char str[],int len)
+{
+char* decodestr;
+decodestr=(char*)malloc(sizeof(char)*SIZE);
+int i,j,k=0,countbits;
+int num;        //stores the bitstream
+
+for(i=0;i<len;i+=4)
+{
+num=0,countbits=0;
+	for(j=0;j<4;j++)
+	{
+       	if(str[i+j]!='=')
+	{
+	num=num<<6;
+
+	countbits+=6;
+	}
+ if(str[i+j]>='A'&&str[i+j]<='Z') //find position each encoded character
+
+  num=num|(str[i+j]-'A');
+
+  else if(str[i+j]>='a'&&str[i+j]<='z')        
+
+   num=num|(str[i+j]-'a');
+
+  else if(str[i+j]>='0'&&str[i+j]<='9')        
+
+   num=num|(str[i+j]-'0'+52);
+
+  else if(str[i+j]=='+')
+
+	num=num|62;
+
+  else if(str[i+j]=='/')
+
+	num=num|63;
+   else
+	{
+	num=num>>2;   //remove 2bis(str[i+j]=='=')
+	countbits-=2;
+	}
+   }
+while(countbits!=0)
+{
+countbits-=8;
+
+decodestr[k++]=(num>>countbits)&255;
+}
+}
+decodestr[k]='\0';
+
+return decodestr;
+}
+int main()
+{
+char str[100];
+
+int len;
+
+printf("enter the string\n");
+scanf("%[^\n]%*c",str);
+
+len=strlen(str);
+printf("decoded string is:%s\n",base64decoder(str,len));
+return 0;
+}
