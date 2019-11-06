@@ -30,7 +30,7 @@ padding=nobits%3;
 	else
 	{
 	temp=6-nobits;
-	index=(val<<temp)&&63;//append zeros
+	index=(val<<temp)&63;//append zeros
 	nobits=0;
 	}
 	resstr[k++]=char_set[index];
