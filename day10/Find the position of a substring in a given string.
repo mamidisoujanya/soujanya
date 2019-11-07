@@ -1,0 +1,30 @@
+#include <iostream> 
+using namespace std; 
+int main()
+{
+char str[50],str1[50];
+int i,j,flag,l;
+cout<<"enter main string:\n";
+scanf("%[^\n]%*c",str);
+cout<<"enter substring:\n";
+scanf("%[^\n]%*c",str1);
+
+for(l=0;str1[l]!='\0';l++);
+
+for(i=0,j=0;str[i]!='\0' && str1[j]!='\0';i++)
+{
+	if(str[i]==str1[j])
+		{
+		j++;
+		}
+	else
+ 	{
+	j=0;	
+	}
+}
+if(j==l)
+cout<<"substring found at position: "<<i-j+1;
+else
+cout<<"sub string not found";
+return 0;
+}
