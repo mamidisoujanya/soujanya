@@ -1,0 +1,25 @@
+#include <iostream> 
+using namespace std; 
+int main()
+{
+char str[50];
+char temp;
+int i,j=0,k;
+cout<<"enter the string:";
+cin>>str;
+for(j=0;str[j]!='\0';j++);
+
+for(i=1;i<j;i++)
+for(k=0;k<j-i;k++)
+
+if(str[k]>str[k+1])
+{
+temp=str[k];
+str[k]=str[k+1];
+str[k+1]=temp;
+}
+
+cout<<"sorting string is :\n"<<str;
+
+return 0;
+}
