@@ -1,30 +1,14 @@
 #include<stdio.h>
-int main()
+int main() 
 {
-int decnum,k,i,j,temp;
-char h[100];
-  
-for(k=65;k<=90;k++)
-{
-i=1;
-decnum=k;
+int k;
+printf(" ASCII table for alpha numeric characters\nchar\tdec\thex\n");
 	
-while(decnum!=0)
-   {
-     temp = decnum%16;
-    
-      if( temp<10)
-      temp =temp+48;
-       else
-       temp = temp+55;
-	h[i++]= temp;
-	decnum  = decnum/16;
-  }
-printf("ascii value of %c is %d\t",k,k);
-	printf("hexadecimal value is :");
-	for (j = i -1;j>0;j--)
-	      printf("%c",h[j]);
-		printf("\n\n");
-}
-	return 0;
+	for(k=33;k<=126;k++)
+	{
+        printf("%c\t %d\t %x",k,k,k);
+	printf("\n\n");
+        }
+
+return 0;
 }
