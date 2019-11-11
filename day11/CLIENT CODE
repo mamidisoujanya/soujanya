@@ -50,20 +50,14 @@ memset(&serv_addr,'\0',sizeof(serv_addr));
     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
 
         error("error connecting");
-                 
+        
 FILE *fptr,*ptr; 
 
-int deviceid,attributeid,choice;
+int deviceid,choice;
 
 char devicename[100],location[100];
 
-printf("enter the choice 1.for enter the details 2.for display the details\n");
-
-scanf("%d",&choice);
-
-if(choice==1)
-{
-  
+ 
 fptr = fopen("one.txt", "w"); 
 
     if (fptr == NULL) 
@@ -76,45 +70,39 @@ printf("enter the details :\n ");
 
 printf("enter the\n 1.devicename\n");
 
-scanf("%s",devicename);
+scanf("%s",devicename); 
 
 printf("enter the deviceid\n");
 
 scanf("%d", &deviceid);
 
-printf("enter the attributeid\n");
-
-scanf("%d",&attributeid);
-
 printf("enter the location: \n");
 
 scanf("%s",location);
 
-fprintf(fptr,"devicename=%s\ndeviceid:%d\nattributeid:%d\nlocation:%s",devicename,deviceid,attributeid,location);
+fprintf(fptr,"devicename=%s\ndeviceid:%d\nlocation:%s",devicename,deviceid,location);
 
-}
-else
-{
-  
-   char ch ;
-   ptr = fopen("one.txt", "r");   
-   
+printf(" details of device is \n");
+
+char ch ;
+
+  ptr = fopen("one.txt", "r"); 
+
        while(ch != EOF)
           {
 		
-	     	fscanf(ptr , "%s" , buffer);
-	     	//printf("%s" , buffer);	
+		fscanf(ptr , "%s" , buffer);
+		
+		printf("%s\n" , buffer);	
 
-	     	write(sockfd,buffer,255);
+		write(sockfd,buffer,255);
 
-	    	ch = fgetc(ptr);
-    
+		ch = fgetc(ptr);
           }
 	printf("The file was sent successfully");
     
     close(sockfd);
 
 	fclose(fptr);
-}
-    return 0;
+	return 0;
 }
