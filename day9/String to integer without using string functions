@@ -14,10 +14,7 @@ while(str[i]!='\0')
 	{
 	num=num*10+str[i]-'0';
 	}
-	else
-	{
-	i=i;
-	}
+	
 i++;
 }
 cout<<"after converting string to integer"<<num;
