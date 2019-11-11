@@ -51,7 +51,7 @@ memset(&serv_addr,'\0',sizeof(serv_addr));
 
         error("error connecting");
         
-FILE *fptr,*ptr; 
+FILE *fptr; 
 
 int deviceid,choice;
 
@@ -71,20 +71,21 @@ printf("enter the details :\n ");
 printf("enter the\n 1.devicename\n");
 
 scanf("%s",devicename); 
-
 printf("enter the deviceid\n");
-
 scanf("%d", &deviceid);
-
 printf("enter the location: \n");
-
 scanf("%s",location);
 
 fprintf(fptr,"devicename=%s\ndeviceid:%d\nlocation:%s",devicename,deviceid,location);
 
-printf(" details of device is \n");
+printf("enter the choice 1.for display the details 2.edit the data\n");
+scanf("%d",&choice);
 
+if(choice==1)
+{
+FILE *ptr;
 char ch ;
+printf(" details of device is \n");
 
   ptr = fopen("one.txt", "r"); 
 
@@ -92,7 +93,7 @@ char ch ;
           {
 		
 		fscanf(ptr , "%s" , buffer);
-		
+
 		printf("%s\n" , buffer);	
 
 		write(sockfd,buffer,255);
@@ -104,5 +105,33 @@ char ch ;
     close(sockfd);
 
 	fclose(fptr);
-	return 0;
+}
+else if(choice==2)
+{
+printf("edit the data\n");
+
+ 
+fptr = fopen("xyz.txt", "w"); 
+
+    if (fptr == NULL) 
+    { 
+        printf("Cannot open file \n"); 
+
+        exit(0); 
+    } 
+printf("enter the details :\n ");
+
+printf("enter the\n devicename\n");
+
+scanf("%s",devicename); 
+
+printf("enter the deviceid\n");
+
+scanf("%d", &deviceid);
+
+printf("enter the location: \n");
+
+scanf("%s",location);
+}
+    return 0;
 }
