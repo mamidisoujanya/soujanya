@@ -119,19 +119,32 @@ fptr = fopen("xyz.txt", "w");
 
         exit(0); 
     } 
-printf("enter the details :\n ");
+int i;
+printf("i=1.for edit name 2.for edit device id 3.for edit location\n");
+scanf("%d",&i);
+   switch(i)
+   {
+	case 1:
 
-printf("enter the\n devicename\n");
+	printf("enter the\n devicename\n");
 
-scanf("%s",devicename); 
+	scanf("%s",devicename); 
+	break;
+	case 2:
 
-printf("enter the deviceid\n");
+	printf("enter the deviceid\n");
 
-scanf("%d", &deviceid);
+	scanf("%d", &deviceid);
+	break;
+	case 3:
+	printf("enter the location: \n");
 
-printf("enter the location: \n");
+	scanf("%s",location);
+	break;
+	case 4:
+	printf("you enter wrong choice");
+	break;
 
-scanf("%s",location);
-}
+  } 
     return 0;
 }
