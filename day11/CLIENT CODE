@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h> 
+#include<ctype.h>
+
+void error(const char *msg)
+{
+    perror(msg);
+    exit(0);
+}
+
+int main(int argc, char *argv[])
+{
+    int sockfd, portno, n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+
+    char buffer[255];
+    if (argc < 3)
+    {
+       fprintf(stderr,"usage %s hostname port\n", argv[0]);
+       exit(0);
+    }
+    portno = atoi(argv[2]);
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+        error("error opening socket");
+
+    server = gethostbyname(argv[1]);
+     if (server == NULL) 
+     {
+        fprintf(stderr,"error, no such host\n");
+        exit(0);
+     }
+  
+memset(&serv_addr,'\0',sizeof(serv_addr));
+
+    serv_addr.sin_family = AF_INET;
+
+    bcopy((char *)server->h_addr,(char *)&serv_addr.sin_addr.s_addr,server->h_length);
+
+    serv_addr.sin_port = htons(portno);
+
+    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
+
+        error("error connecting");
+                 
+FILE *fptr,*ptr; 
+
+int deviceid,attributeid,choice;
+
+char devicename[100],location[100];
+
+printf("enter the choice 1.for enter the details 2.for display the details\n");
+
+scanf("%d",&choice);
+
+if(choice==1)
+{
+  
+fptr = fopen("one.txt", "w"); 
+
+    if (fptr == NULL) 
+    { 
+        printf("Cannot open file \n"); 
+
+        exit(0); 
+    } 
+printf("enter the details :\n ");
+
+printf("enter the\n 1.devicename\n");
+
+scanf("%s",devicename);
+
+printf("enter the deviceid\n");
+
+scanf("%d", &deviceid);
+
+printf("enter the attributeid\n");
+
+scanf("%d",&attributeid);
+
+printf("enter the location: \n");
+
+scanf("%s",location);
+
+fprintf(fptr,"devicename=%s\ndeviceid:%d\nattributeid:%d\nlocation:%s",devicename,deviceid,attributeid,location);
+
+}
+else
+{
+  
+   char ch ;
+   ptr = fopen("one.txt", "r");   
+   
+       while(ch != EOF)
+          {
+		
+	     	fscanf(ptr , "%s" , buffer);
+	     	//printf("%s" , buffer);	
+
+	     	write(sockfd,buffer,255);
+
+	    	ch = fgetc(ptr);
+    
+          }
+	printf("The file was sent successfully");
+    
+    close(sockfd);
+
+	fclose(fptr);
+}
+    return 0;
+}
