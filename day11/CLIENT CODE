@@ -111,21 +111,19 @@ ptr = fopen("one.txt", "r");
     } 
        while(ch != EOF)
           {
-		
 		fscanf(ptr , "%s" , buffer);
 
 		write(sockfd,buffer,255);
 
 		printf("%s\n" , buffer);	
 
-
 		ch = fgetc(ptr);
           }
 	printf("The file was sent successfully\n");
     
-        close(sockfd);
-
-	fclose(ptr);
+ close(sockfd);
+ 
+ fclose(ptr);
 
 //printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
 //scanf("%d",&choice);
@@ -148,8 +146,8 @@ int i, deviceid;
 
 char devicename[30],location[30];
 
-//printf("i=1.for edit name 2.for edit device id 3.for edit location");
-//scanf("%d",&i);
+printf("i=1.for edit name 2.for edit device id 3.for edit location");
+scanf("%d",&i);
    switch(i)
    {
 	case 1:
@@ -175,9 +173,11 @@ char devicename[30],location[30];
 
    } 
 fscanf(fp , "%s" , buffer);
-write(sockfd,buffer,255);
-close(sockfd);
 
+write(sockfd,buffer,255);
+
+close(sockfd);
+fclose(fp);
 //printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
 //scanf("%d",&choice);
 }
