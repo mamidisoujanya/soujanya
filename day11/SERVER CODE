@@ -35,6 +35,7 @@ Answer:
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <ctype.h>
 
 int main(int argc,char *argv[])
 {
@@ -81,23 +82,63 @@ newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
 	  perror("error on accept");
 
 FILE *fp;
+int ch=0;
+int command;
+//while(1)
+//{
+read(newsockfd,buff,255);
 
- read(newsockfd,buff,255);
+command=(int)buff[0];
 
-//printf("%s",buff);
+switch(command)
+{
+	
+	case 2:
+		printf("displaying the data\n");
+		//while((ch=read(newsockfd,buff,255))>0)
+		while(ch<3)
+		{
+ 		read(newsockfd,buff,255);
 
-  fp=fopen("xyz.txt","a");
+		printf("%s\n",buff);
 
-   fprintf(fp,"%s",buff);
+ 		 fp=fopen("databasefile.txt","a");
 
-printf("The file was received successfully\n");
+  		fprintf(fp,"%s\n",buff);
+		ch++;
+		}
 
-	   printf("The new file created is xyz.txt");
+		printf("The file was received successfully\n");
 
-     close(newsockfd);
+	   	printf("The new file created is databasefile.txt");
 
-     close(sockfd);
+     		close(newsockfd);
 
-     fclose(fp);
+     		close(sockfd);
+
+     		fclose(fp);
+		break;
+	case 3: 
+		printf("edit the data\n");
+
+		while(ch<3)
+		{
+ 		read(newsockfd,buff,255);
+
+		printf("%s\n",buff);
+
+ 		 fp=fopen("databasefile.txt","a");
+
+  		fprintf(fp,"%s\n",buff);
+		ch++;
+		}
+		printf("The file was edited successfully\n");
+		break;
+	case 5:
+		printf("defult command\n");
+		exit(0);
+		break;
+//}	
+}	
 return 0;
 }
