@@ -50,12 +50,17 @@ int main(int argc, char *argv[])
     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
 
         error("error connecting");
+	bzero(buffer,255);
   
- 
+ //while(1)
+//{
 int choice;
-        
+       
+printf("**---menu--**\n"); 
 printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
 scanf("%d",&choice);
+buffer[0]=choice;
+write(sockfd,buffer,255);
 
 if(choice==1)
 {
@@ -65,7 +70,7 @@ FILE *fptr;
 
 int deviceid;
 
-char devicename[30],location[30];
+char devicename[20],location[20],ch;
 
  
 fptr = fopen("one.txt", "w"); 
@@ -78,22 +83,37 @@ fptr = fopen("one.txt", "w");
     } 
 printf("enter the device attributes :\n ");
 
-printf("enter thr devicename its length should be less than 30\n");
+printf("enter thr devicename its length should be less than 20\n");
 
-scanf("%s",devicename);
+scanf("%19s",devicename);
  
 printf("enter the deviceid\n");
 
 scanf("%d", &deviceid);
 
-printf("enter thr location its length should be less than 30 \n");
+printf("enter thr location its length should be less than 20 \n");
 
-scanf("%s",location);
+scanf("%19s",location);
 
 fprintf(fptr,"devicename=%s\ndeviceid:%d\nlocation:%s",devicename,deviceid,location);
 
-//printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
-//scanf("%d",&choice);
+       while(ch != EOF)
+          {
+		
+		fscanf(fptr , "%s\n" , buffer);
+
+		write(sockfd,buffer,255);
+
+		printf("%s\n" , buffer);	
+
+
+		ch = fgetc(fptr);
+          }
+	printf("The file was sent successfully\n");
+    
+        close(sockfd);
+
+	fclose(fptr);
 }
 
 else if(choice==2)
@@ -111,7 +131,8 @@ ptr = fopen("one.txt", "r");
     } 
        while(ch != EOF)
           {
-		fscanf(ptr , "%s" , buffer);
+		
+		fscanf(ptr , "%s\n" , buffer);
 
 		write(sockfd,buffer,255);
 
@@ -121,12 +142,9 @@ ptr = fopen("one.txt", "r");
           }
 	printf("The file was sent successfully\n");
     
- close(sockfd);
- 
- fclose(ptr);
+        close(sockfd);
 
-//printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
-//scanf("%d",&choice);
+	fclose(ptr);
 }
 else if(choice==3)
 {
@@ -144,7 +162,7 @@ fp = fopen("one.txt", "r+");
 
 int i, deviceid;
 
-char devicename[30],location[30];
+char devicename[20],location[20];
 
 printf("i=1.for edit name 2.for edit device id 3.for edit location");
 scanf("%d",&i);
@@ -152,40 +170,66 @@ scanf("%d",&i);
    {
 	case 1:
 
-	printf("enter thr devicename its length should be less than 30\n");
+	printf("enter thr devicename its length should be less than 20\n");
 
-	scanf("%s",devicename); 
+	scanf("%19s",devicename); 
+	fprintf(fp,"devicename=%s",devicename);
 	break;
 	case 2:
 
 	printf("enter the deviceid\n");
 
 	scanf("%d", &deviceid);
+	
+	fprintf(fp,"deviceid=%d\n",deviceid);
 	break;
 	case 3:
-	printf("enter thr location its length should be less than 30 \n");
+	printf("enter the location its length should be less than 30 \n");
 
-	scanf("%s",location);
+	scanf("%19s",location);
+	
+	fprintf(fp,"location=%s\n",location);
 	break;
 	case 4:
 	printf("you enter wrong choice");
 	break;
 
    } 
-fscanf(fp , "%s" , buffer);
+fscanf(fp , "%s\n" , buffer);
 
 write(sockfd,buffer,255);
 
 close(sockfd);
-fclose(fp);
-//printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
-//scanf("%d",&choice);
+
 }
+//else if(choice==4)
+//{
+//printf("remove device attribute\n");
+
+//printf("enter the deviceid\n");
+
+//scanf("%d", &deviceid);
+
+   //FILE	*fp1 = fopen("one.txt", "r"); 
+
+    //if (fp1 == NULL) 
+    //{ 
+        //printf("Cannot open file \n"); 
+
+        //exit(0); 
+   // } 
+//remove()
+//fscanf(fp1 , "%s" , buffer);
+
+//write(sockfd,buffer,255);
+
+//close(sockfd);
+//}
 else if(choice==5)
 {
-printf("invalid choice");
+printf("exit successfully");
 exit(0);
 }
-
+//}
     return 0;
 }
