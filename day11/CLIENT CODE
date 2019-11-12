@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h> 
-
+#include<ctype.h>
 
 void error(const char *msg)
 {
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
         exit(0);
      }
   
-memset(&serv_addr,'\0',sizeof(serv_addr));
+    memset(&serv_addr,'\0',sizeof(serv_addr));
 
     serv_addr.sin_family = AF_INET;
 
@@ -50,12 +50,22 @@ memset(&serv_addr,'\0',sizeof(serv_addr));
     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
 
         error("error connecting");
+  
+ 
+int choice;
         
+printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
+scanf("%d",&choice);
+
+if(choice==1)
+{
+printf("add the info\n");
+
 FILE *fptr; 
 
-int deviceid,choice;
+int deviceid;
 
-char devicename[100],location[100];
+char devicename[30],location[30];
 
  
 fptr = fopen("one.txt", "w"); 
@@ -66,67 +76,85 @@ fptr = fopen("one.txt", "w");
 
         exit(0); 
     } 
-printf("enter the details :\n ");
+printf("enter the device attributes :\n ");
 
-printf("enter the\n 1.devicename\n");
+printf("enter thr devicename its length should be less than 30\n");
 
-scanf("%s",devicename); 
+scanf("%s",devicename);
+ 
 printf("enter the deviceid\n");
+
 scanf("%d", &deviceid);
-printf("enter the location: \n");
+
+printf("enter thr location its length should be less than 30 \n");
+
 scanf("%s",location);
 
 fprintf(fptr,"devicename=%s\ndeviceid:%d\nlocation:%s",devicename,deviceid,location);
 
-printf("enter the choice 1.for display the details 2.edit the data\n");
-scanf("%d",&choice);
-
-if(choice==1)
-{
-FILE *ptr;
-char ch ;
-printf(" details of device is \n");
-
-  ptr = fopen("one.txt", "r"); 
-
-       while(ch != EOF)
-          {
-		
-		fscanf(ptr , "%s" , buffer);
-
-		printf("%s\n" , buffer);	
-
-		write(sockfd,buffer,255);
-
-		ch = fgetc(ptr);
-          }
-	printf("The file was sent successfully");
-    
-    close(sockfd);
-
-	fclose(fptr);
+//printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
+//scanf("%d",&choice);
 }
+
 else if(choice==2)
 {
-printf("edit the data\n");
+printf("display the info\n");
+FILE *ptr;
+char ch ;
+ptr = fopen("one.txt", "r"); 
 
- 
-fptr = fopen("xyz.txt", "w"); 
-
-    if (fptr == NULL) 
+    if (ptr == NULL) 
     { 
         printf("Cannot open file \n"); 
 
         exit(0); 
     } 
-int i;
-printf("i=1.for edit name 2.for edit device id 3.for edit location\n");
-scanf("%d",&i);
+       while(ch != EOF)
+          {
+		
+		fscanf(ptr , "%s" , buffer);
+
+		write(sockfd,buffer,255);
+
+		printf("%s\n" , buffer);	
+
+
+		ch = fgetc(ptr);
+          }
+	printf("The file was sent successfully\n");
+    
+        close(sockfd);
+
+	fclose(ptr);
+
+//printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
+//scanf("%d",&choice);
+}
+else if(choice==3)
+{
+FILE *fp;
+printf("edit the info\n");
+ 
+fp = fopen("one.txt", "r+"); 
+
+    if (fp == NULL) 
+    { 
+        printf("Cannot open file \n"); 
+
+        exit(0); 
+    } 
+
+int i, deviceid;
+
+char devicename[30],location[30];
+
+//printf("i=1.for edit name 2.for edit device id 3.for edit location");
+//scanf("%d",&i);
    switch(i)
    {
 	case 1:
 
-	printf("enter the\n devicename\n");
+	printf("enter thr devicename its length should be less than 30\n");
 
 	scanf("%s",devicename); 
 	break;
@@ -137,7 +165,7 @@ scanf("%d",&i);
 	scanf("%d", &deviceid);
 	break;
 	case 3:
-	printf("enter the location: \n");
+	printf("enter thr location its length should be less than 30 \n");
 
 	scanf("%s",location);
 	break;
@@ -145,6 +173,19 @@ scanf("%d",&i);
 	printf("you enter wrong choice");
 	break;
 
-  } 
+   } 
+fscanf(fp , "%s" , buffer);
+write(sockfd,buffer,255);
+close(sockfd);
+
+//printf("enter the choice\n1.for add the details\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
+//scanf("%d",&choice);
+}
+else if(choice==5)
+{
+printf("invalid choice");
+exit(0);
+}
+
     return 0;
 }
