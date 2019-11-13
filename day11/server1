@@ -82,17 +82,23 @@ switch(command)
 		printf("displaying the data\n");
 
 		//read(newsockfd,buff,255);
-		
-		fp1=fopen("databasefile.txt","r");
-
-		while(fp1!=NULL)
+		while(1)
 		{
-		fgets(str,100,fp1);
-		}
-		printf("%s",str);
-		write(newsockfd,str,255);
+			fp1=fopen("databasefile.txt","r");
 		
+			while(fp1!=EOF)
+			{
+			fgets(str,100,fp1);
+		
+			printf("%s",str);
+
+			n=write(newsockfd,str,255);
+		 	 if (n < 0) 
+                 	 perror("error in writing to socket");
+			}
+                }
 		close(newsockfd);
+
 		fclose(fp1);
 		break;
 
