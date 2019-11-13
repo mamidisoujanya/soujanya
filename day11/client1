@@ -125,14 +125,14 @@ else if(choice==3)
 	int i;
 	printf("edit the data\n");
 	
-	printf("i=1.for edit name \n2.for edit device id \n3.for edit location \n4.edit all\n");
-        scanf("%d",&i);
-	
 	printf("enter the device id which one you want change:\n");
 
 	scanf("%d",&deviceid);
 
 	packet[1][0]=deviceid;
+	
+	printf("i=1.for device no\n2.for edit name \n3.for edit location \n4.edit all\n");
+        scanf("%d",&i);
 
    switch(i)
    {
