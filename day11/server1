@@ -13,7 +13,7 @@ int sockfd,newsockfd,portno,n;
 
 socklen_t clilen;
 
-char buff[16][16];
+char buff[255];
 
 struct sockaddr_in servaddr,cliaddr;
 
@@ -54,13 +54,13 @@ newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
 FILE *fp ,*fp1,*fp2;
 int ch=0,l;
 int command;
-char str[100];
-
+char str[255],*id;
+char *ptr;
 //while(1)
 //{
 read(newsockfd,buff,255);
 
-command=buff[0][0];
+command=buff[0];
 
 switch(command)
 {
@@ -72,13 +72,14 @@ switch(command)
 
 		fp=fopen("databasefile.txt","a");
 
-		fprintf(fp,"\ndeviceid:%d\ndeviceno:%d\ndevicename:%s\nlocation:%s\n",buff[1][0],buff[2][0],&buff[3][0],&buff[4][0]);
+		fprintf(fp,"\ndeviceid:%d\ndeviceno:%d\ndevicename:%s\nlocation:%s\n",buff[1],buff[2],&buff[3],&buff[4]);
 		
 		close(newsockfd);
-		
+		fclose(fp);
 	break;
 
 	case 2:
+
 		printf("displaying the data\n");
 
 		//read(newsockfd,buff,255);
@@ -109,46 +110,51 @@ switch(command)
 
 		//printf("%s\n",buff);
 
- 		 fp=fopen("databasefile.txt","");
+ 		fp=fopen("databasefile.txt","");
 
   		fprintf(fp,"%s",buff);
 		
 		printf("The file was edited successfully\n");
-
+		fclose(fp);
 		break;
 
 	case 4:
+
+		
+		ptr=buff;
 		printf("remove the device\n");
 
 		read(newsockfd,buff,255);		
 						
 		fp1=fopen("databasefile.txt","r");		
 		
-		fp2=fopen("copy.txt","w");
- 			if (fp2== NULL) 
-   			 { 
-      			  printf("Cannot open file \n"); 
-
-       			 exit(0); 
-   			 } 
-				
-			while(fgets(str,100,fp1)!=NULL)
-			//if(fp1!=EOF)
+		//fp2=fopen("copy.txt","w");
+ 			if (fp1!=NULL) 
+   			{				
+			while(!feof(fp1))
+			
 			{
-			int id=buff[1][0];
-
-			l++;
+			
+			fgets(str,100,fp1);
+			 id=buff;
+			       if(strcmp(str,id)==0)
+			         {
 		
-				if(str[l]!=id)
-				{
-				  fprintf(fp2,"%s",str);
-					printf("%s",str);
+				strcpy(ptr,str+4);
+					//printf("%s",str);
+				//ptr+=strlen(str*4);
 				}
+				else
+				{
+				strcpy(ptr,str);
+				ptr+=strlen(str);
+				}	
+			}
 			}
 	fclose(fp1);
-	fclose(fp2);
-	remove("databasefile.txt");
-	rename("copy.txt","databasefile.txt");
+	fp1=fopen("databasefile.txt","w");
+	fprintf(fp1,"%s",buff);
+	fclose(fp1);
 	 break;
 
 	case 5:
@@ -157,5 +163,34 @@ switch(command)
 
 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
