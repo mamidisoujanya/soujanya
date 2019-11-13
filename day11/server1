@@ -51,17 +51,11 @@ newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
 
 	  perror("error on accept");
 
-
-
-
-FILE *fp;
-int ch=0;
+FILE *fp ,*fp1,*fp2;
+int ch=0,l;
 int command;
-FILE *fp1,*fp2;
+char str[100];
 
-		char str[100];
-		
-		int l=0,deviceid;
 //while(1)
 //{
 read(newsockfd,buff,255);
@@ -73,17 +67,34 @@ switch(command)
 	
 	case 1:
 		printf("add the data\n");
-		//while(ch<3)
-		//{
+		
 		read(newsockfd,buff,255);
 
 		fp=fopen("databasefile.txt","a");
 
 		fprintf(fp,"\ndeviceid:%d\ndeviceno:%d\ndevicename:%s\nlocation:%s\n",buff[1][0],buff[2][0],&buff[3][0],&buff[4][0]);
-		//ch++;
-		//}
+		
+		close(newsockfd);
+		
 	break;
 
+	case 2:
+		printf("displaying the data\n");
+
+		//read(newsockfd,buff,255);
+		
+		fp1=fopen("databasefile.txt","r");
+
+		while(fp1!=NULL)
+		{
+		fgets(str,100,fp1);
+		}
+		printf("%s",str);
+		write(newsockfd,str,255);
+		
+		close(newsockfd);
+		fclose(fp1);
+		break;
 
 	case 3: 
 		printf("edit the data\n");
@@ -96,8 +107,8 @@ switch(command)
 
   		fprintf(fp,"%s",buff);
 		
-		
 		printf("The file was edited successfully\n");
+
 		break;
 
 	case 4:
@@ -128,11 +139,11 @@ switch(command)
 					printf("%s",str);
 				}
 			}
-fclose(fp1);
-fclose(fp2);
-remove("databasefile.txt");
-rename("copy.txt","databasefile.txt");
- break;
+	fclose(fp1);
+	fclose(fp2);
+	remove("databasefile.txt");
+	rename("copy.txt","databasefile.txt");
+	 break;
 
 	case 5:
 		printf("exit exit successfully");
@@ -140,65 +151,5 @@ rename("copy.txt","databasefile.txt");
 
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
