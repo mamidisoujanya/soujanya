@@ -1,0 +1,250 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h> 
+#include<ctype.h>
+
+void error(const char *msg)
+{
+    perror(msg);
+    exit(0);
+}
+
+int main(int argc, char *argv[])
+{
+    int sockfd, portno, n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+
+    char buffer[255];
+    if (argc < 3)
+    {
+       fprintf(stderr,"usage %s hostname port\n", argv[0]);
+       exit(0);
+    }
+    portno = atoi(argv[2]);
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+        error("error opening socket");
+
+    server = gethostbyname(argv[1]);
+     if (server == NULL) 
+     {
+        fprintf(stderr,"error, no such host\n");
+        exit(0);
+     }
+  
+    memset(&serv_addr,'\0',sizeof(serv_addr));
+
+    serv_addr.sin_family = AF_INET;
+
+    bcopy((char *)server->h_addr,(char *)&serv_addr.sin_addr.s_addr,server->h_length);
+
+    serv_addr.sin_port = htons(portno);
+
+    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
+
+        error("error connecting");
+	//bzero(buffer,255);
+  
+ //while(1)
+//{
+int choice;
+
+char packet[16][16],string[30],str2[30]; 
+  
+int deviceid,deviceno;
+
+printf("**---menu--**\n"); 
+
+printf("enter the choice\n1.for add the device information\n2.for dispaly data\n3.edit the data\n4.remove the device\n5.exit\n");
+
+scanf("%d",&choice);
+
+packet[0][0]=choice;
+
+write(sockfd,packet,255);
+
+if(choice==1)
+{
+
+	printf("add the info\n");
+
+	printf("enter the device id:\n");
+
+	scanf("%d",&deviceid);
+
+	packet[1][0]=deviceid;
+
+	printf("enter the device no:\n");
+
+	scanf("%d",&deviceno);
+	
+	packet[2][0]=deviceno;
+
+	printf("enter device name length should be less than 30:\n");
+
+	scanf("%29s",packet[3]);
+
+	//packet[3][0]=string;
+
+	printf("enter location length should be less than 30:\n");
+
+	scanf("%29s",packet[4]); 
+
+	write(sockfd,packet,255);
+
+	close (sockfd);
+}
+else if(choice==2)
+{
+
+        printf("enter the device id which one you see:\n");
+
+	scanf("%d",&deviceid);
+
+	packet[1][0]=deviceid;
+
+	write(sockfd,packet,255);
+
+	read(sockfd,buffer,255);
+
+	printf("%s",buffer);
+
+	close (sockfd);
+
+}
+
+else if(choice==3)
+{
+	int i;
+	printf("edit the data\n");
+	
+	printf("i=1.for edit name \n2.for edit device id \n3.for edit location \n4.edit all\n");
+        scanf("%d",&i);
+	
+	printf("enter the device id which one you want change:\n");
+
+	scanf("%d",&deviceid);
+
+	packet[1][0]=deviceid;
+
+   switch(i)
+   {
+	case 1:
+
+	printf("enter the device no:\n");
+
+	scanf("%d",&deviceno);
+	
+	packet[2][0]=deviceno;
+
+
+	break;
+	case 2:
+
+	printf("enter device name length should be less than 30:\n");
+
+	scanf("%29s",packet[3]);
+
+	break;
+	case 3:
+	printf("enter location length should be less than 30:\n");
+
+	scanf("%29s",packet[4]); 
+	break;
+	
+	case 4:
+		printf("enter the device no:\n");
+
+		scanf("%d",&deviceno);
+	
+		packet[2][0]=deviceno;
+	
+		printf("enter device name length should be less than 30:\n");
+
+		scanf("%29s",packet[3]);
+
+		printf("enter location length should be less than 30:\n");
+
+		scanf("%29s",packet[4]); 
+
+		write(sockfd,packet,255);
+
+		close (sockfd);
+	break;
+
+	case 5:
+
+	printf("you enter wrong choice");
+
+	break;
+
+   } 
+write(sockfd,packet,255);
+
+close(sockfd);
+ 
+}
+
+else if(choice==4)
+{
+	printf("remove the device\n");
+
+	printf("enter the device id which one you want remove:\n");
+
+	scanf("%d",&deviceid);
+
+	packet[1][0]=deviceid;
+
+write(sockfd,packet,255);
+
+close(sockfd);
+
+}
+else if(choice==5)
+{
+
+printf("exit successfully");
+
+exit(0);
+
+}
+
+return 0;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
