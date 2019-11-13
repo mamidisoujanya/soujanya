@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <ctype.h>
+
+int main(int argc,char *argv[])
+{
+int sockfd,newsockfd,portno,n;
+
+socklen_t clilen;
+
+char buff[16][16];
+
+struct sockaddr_in servaddr,cliaddr;
+
+ if(argc<2)
+ {
+ fprintf(stderr,"error no port provided\n");
+ exit(1);
+ }
+
+sockfd=socket(AF_INET,SOCK_STREAM,0);
+	if(sockfd<0)
+	perror("error opening file");
+
+memset(&servaddr,'\0',sizeof(servaddr));
+
+portno=atoi(argv[1]);
+
+servaddr.sin_family=AF_INET;
+
+servaddr.sin_addr.s_addr=INADDR_ANY;
+
+servaddr.sin_port=htons(portno);
+
+if(bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr))<0)
+
+	perror("error in binding");
+
+listen(sockfd,5);
+
+clilen=sizeof(cliaddr);
+
+newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
+
+	if(newsockfd<0)
+
+	  perror("error on accept");
+
+
+
+
+FILE *fp;
+int ch=0;
+int command;
+FILE *fp1,*fp2;
+
+		char str[100];
+		
+		int l=0,deviceid;
+//while(1)
+//{
+read(newsockfd,buff,255);
+
+command=buff[0][0];
+
+switch(command)
+{
+	
+	case 1:
+		printf("add the data\n");
+		//while(ch<3)
+		//{
+		read(newsockfd,buff,255);
+
+		fp=fopen("databasefile.txt","a");
+
+		fprintf(fp,"\ndeviceid:%d\ndeviceno:%d\ndevicename:%s\nlocation:%s\n",buff[1][0],buff[2][0],&buff[3][0],&buff[4][0]);
+		//ch++;
+		//}
+	break;
+
+	case 4:
+		printf("remove the device\n");
+
+		read(newsockfd,buff,255);		
+						
+		fp1=fopen("databasefile.txt","r");		
+		
+		fp2=fopen("temp.txt","w");
+ 			if (fp2== NULL) 
+   			 { 
+      			  printf("Cannot open file \n"); 
+
+       			 exit(0); 
+   			 } 
+				
+			while(fgets(str,100,fp1)!=NULL)
+			//if(fp1!=EOF)
+			{
+			int id=buff[1][0];
+
+			l++;
+		
+				if(str[l]!=id)
+				{
+				  fprintf(fp2,"%s",str);
+					printf("%s",str);
+				}
+			}
+fclose(fp1);
+fclose(fp2);
+remove("databasefile.txt");
+rename("temp.txt","databasefile.txt");
+ break;
+
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
