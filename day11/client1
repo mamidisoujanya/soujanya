@@ -104,18 +104,20 @@ if(choice==1)
 else if(choice==2)
 {
 
-        printf("enter the device id which one you see:\n");
+        //printf("enter the device id which one you want see:\n");
 
-	scanf("%d",&deviceid);
+	//scanf("%d",&deviceid);
 
-	packet[1][0]=deviceid;
+	//packet[1][0]=deviceid;
 
-	write(sockfd,packet,255);
-
-	read(sockfd,buffer,255);
-
+	//write(sockfd,packet,255);
+	while(1)
+	{
+	n=read(sockfd,buffer,255);
+	  if (n < 0) 
+             error("error in reading to socket");
 	printf("%s",buffer);
-
+		}
 	close (sockfd);
 
 }
