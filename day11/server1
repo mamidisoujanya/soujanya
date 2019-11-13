@@ -84,6 +84,22 @@ switch(command)
 		//}
 	break;
 
+
+	case 3: 
+		printf("edit the data\n");
+
+		read(newsockfd,buff,255);
+
+		//printf("%s\n",buff);
+
+ 		 fp=fopen("databasefile.txt","");
+
+  		fprintf(fp,"%s",buff);
+		
+		
+		printf("The file was edited successfully\n");
+		break;
+
 	case 4:
 		printf("remove the device\n");
 
@@ -91,7 +107,7 @@ switch(command)
 						
 		fp1=fopen("databasefile.txt","r");		
 		
-		fp2=fopen("temp.txt","w");
+		fp2=fopen("copy.txt","w");
  			if (fp2== NULL) 
    			 { 
       			  printf("Cannot open file \n"); 
@@ -115,11 +131,46 @@ switch(command)
 fclose(fp1);
 fclose(fp2);
 remove("databasefile.txt");
-rename("temp.txt","databasefile.txt");
+rename("copy.txt","databasefile.txt");
  break;
+
+	case 5:
+		printf("exit exit successfully");
+	break;
 
 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
