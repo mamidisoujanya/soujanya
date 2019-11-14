@@ -1,0 +1,221 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <ctype.h>
+
+int main(int argc,char *argv[])
+{
+int sockfd,newsockfd,portno,n;
+
+socklen_t clilen;
+
+char buff[255];
+
+struct sockaddr_in servaddr,cliaddr;
+
+ if(argc<2)
+ {
+ fprintf(stderr,"error no port provided\n");
+ exit(1);
+ }
+
+sockfd=socket(AF_INET,SOCK_STREAM,0);
+	if(sockfd<0)
+	perror("error opening file");
+
+memset(&servaddr,'\0',sizeof(servaddr));
+
+portno=atoi(argv[1]);
+
+servaddr.sin_family=AF_INET;
+
+servaddr.sin_addr.s_addr=INADDR_ANY;
+
+servaddr.sin_port=htons(portno);
+
+if(bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr))<0)
+
+	perror("error in binding");
+
+listen(sockfd,5);
+
+clilen=sizeof(cliaddr);
+
+newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
+
+	if(newsockfd<0)
+
+	  perror("error on accept");
+
+FILE *fp ,*fp1,*fp2;
+int ch=0,l;
+int command;
+char str[100],*id22;
+char *ptr;
+int id,id1;
+int no,no1,res,f=0;
+char *name[20],*location[20],name1[20],location1[20];
+//while(1)
+//{
+read(newsockfd,buff,255);
+
+command=buff[0];
+
+switch(command)
+{
+	
+	case 1:
+		
+		printf("add the data\n");
+		
+		read(newsockfd,buff,255);
+		id=buff[1];
+			no=buff[2];
+			name[3]=&buff[3];
+			location[30]=&buff[30];
+
+
+		fp=fopen("databasefile.txt","a");
+		
+		fprintf(fp,"%d %d %s %s\n",id,no,name[3],location[30]);
+		
+		close(newsockfd);
+		fclose(fp);
+	break;
+
+
+	case 2:
+
+		printf("displaying the data\n");
+		
+		read(newsockfd,buff,255);
+		int id,id1,f=0;
+		
+		id1=buff[1];
+		printf("enter id is %d:",id1);
+		fp=fopen("databasefile.txt","r");
+		fp1=fopen("mm.txt","a");
+		
+		while(fscanf(fp,"%d %d %s %s",&id,&no,name[3],location[30])!=EOF)
+		{
+		
+		if(id==id1)
+		{
+		f=1;
+		printf("fvalue is %d\n",f);
+		fprintf(fp1,"%d %d %s %s\n",id,no,name[3],location[30]);
+		
+		fputs(str,fp1);
+		printf("%s",str);
+		n=write(newsockfd,str,255);
+		  if (n < 0) 
+                  perror("error in writing to socket");
+		//printf("%s",str);
+		}
+		
+                if(f==0)
+		{	
+		printf("device id not their\n");
+		}
+		
+		}
+		close(newsockfd);
+		fclose(fp);
+		fclose(fp1);
+	break;
+
+	case 3: 
+		printf("edit the data\n");
+
+		read(newsockfd,buff,255);
+
+		//printf("%s\n",buff);
+
+ 		fp=fopen("databasefile.txt","");
+
+  		fprintf(fp,"%s",buff);
+		
+		printf("The file was edited successfully\n");
+		fclose(fp);
+		break;
+
+	case 4:
+
+		
+		ptr=buff;
+		printf("remove the device\n");
+
+		read(newsockfd,buff,255);		
+						
+		fp1=fopen("databasefile.txt","r");		
+		
+		//fp2=fopen("copy.txt","w");
+ 			if (fp1!=NULL) 
+   			{				
+			while(!feof(fp1))
+			
+			{
+			
+			fgets(str,100,fp1);
+			 id22=buff;
+			       if(strcmp(str,id22)==0)
+			         {
+		
+				strcpy(ptr,str+4);
+					//printf("%s",str);
+				//ptr+=strlen(str*4);
+				}
+				else
+				{
+				strcpy(ptr,str);
+				ptr+=strlen(str);
+				}	
+			}
+			}
+	fclose(fp1);
+	fp1=fopen("databasefile.txt","w");
+	fprintf(fp1,"%s",buff);
+	fclose(fp1);
+	 break;
+
+	case 5:
+		printf("exit exit successfully");
+	break;
+
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
