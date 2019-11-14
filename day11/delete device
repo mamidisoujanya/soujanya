@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int main()
+{
+FILE *fp,*fp1;
+int id,id1;
+int no,res,f=0;
+char name[20],location[20];
+fp=fopen("base.txt","r");
+fp1=fopen("bnm.txt","a");
+printf("enter the device id\n");
+scanf("%d",&id1);
+while(fscanf(fp,"%d %d %s %s",&id,&no,name,location)!=EOF)
+{
+if(id==id1)
+{
+f=1;
+}
+else
+{
+fprintf(fp1,"%d %d %s %s\n",id,no,name,location);
+}
+}
+if(f==0)
+{
+printf("id not found\n");
+}
+fclose(fp);
+fclose(fp1);
+remove("base.txt");
+rename("bnm.txt","base.txt");
+remove("bnm.txt");
+return 0;
+}
