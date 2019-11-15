@@ -1,0 +1,285 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <ctype.h>
+
+int main(int argc,char *argv[])
+{
+int sockfd,newsockfd,portno,n;
+
+socklen_t clilen;
+
+char buff[255];
+
+struct sockaddr_in servaddr,cliaddr;
+
+ if(argc<2)
+ {
+ fprintf(stderr,"error no port provided\n");
+ exit(1);
+ }
+
+sockfd=socket(AF_INET,SOCK_STREAM,0);
+	if(sockfd<0)
+	perror("error opening file");
+
+memset(&servaddr,'\0',sizeof(servaddr));
+
+portno=atoi(argv[1]);
+
+servaddr.sin_family=AF_INET;
+
+servaddr.sin_addr.s_addr=INADDR_ANY;
+
+servaddr.sin_port=htons(portno);
+
+if(bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr))<0)
+
+	perror("error in binding");
+
+listen(sockfd,5);
+
+clilen=sizeof(cliaddr);
+
+newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
+
+	if(newsockfd<0)
+
+	  perror("error on accept");
+
+while(1)
+{
+FILE *fp ,*fp1;
+int command;
+char str[255];
+char *ptr;
+int id,id1;
+int no,no1,f=0;
+char name[20],location[20];
+
+read(newsockfd,buff,255);
+
+command=buff[0];
+
+	if(command==1)
+	{
+	   printf("add the data\n");
+
+		read(newsockfd,buff,255);
+		
+		fp=fopen("base.txt","a");
+		
+		fprintf(fp,"%d %d %s %s\n",buff[1],buff[2],&buff[3],&buff[30]);
+		
+		close(newsockfd);
+    
+		fclose(fp);
+	}
+	
+	else if(command==2)
+		{
+		printf("displaying the data\n");
+		
+		read(newsockfd,buff,255);
+		
+		id1=buff[1];
+    
+		printf("enter id is %d:",id1);
+    
+		fp=fopen("base.txt","r");
+				
+			while(fscanf(fp,"%d %d %s %s",&id,&no,name,location)!=EOF)
+			{
+		
+				if(id==id1)
+				{
+				f=1;
+				printf("fvalue is %d\n",f);
+        
+				fp1=fopen("mm.txt","a");
+        
+				fprintf(fp1,"%d %d %s %s\n",id,no,name,location);
+        
+				fclose(fp1);
+        
+				fp1=fopen("mm.txt","r");
+        
+        fscanf(fp1,"%[^\n]",str);
+        
+				printf("%s",str);
+			
+				n=write(newsockfd,str,255);
+        
+				  if (n < 0) 
+               
+             perror("error in writing to socket");
+           }
+			}
+		
+          if(f==0)
+	          {	
+	          	printf("device id not their\n");
+	          }
+		close(newsockfd);
+    
+		fclose(fp);
+    
+		fclose(fp1);
+    
+		//fp=fopen("mm.txt","w");
+		//fclose(fp);
+		}
+
+	else if(command==3)
+	{
+		printf("edit the data\n");
+
+		char *name2[20],*location2[20];
+
+		read(newsockfd,buff,255);
+		
+		id1=buff[1];
+    
+    printf("enter id is %d:",id1);
+    
+ 		fp=fopen("base.txt","r");
+    
+		fp1=fopen("mm.txt","a");
+    
+       while(fscanf(fp,"%d %d %s %s",&id,&no,name,location)!=EOF)
+	        {
+	            if(id==id1)
+                 {
+	              	f=1;
+	              	int i;
+		              read(newsockfd,buff,255);
+                  
+		              i=buff[50];
+		
+		              switch(i)
+		              {
+	                  	case 1:
+		                      	printf("edit the device no\n");
+		                      	read(newsockfd,buff,255);
+		                      	no1=buff[2];
+		                      	fprintf(fp1,"%d %d %s %s\n",id,no1,name,location);
+		                  break;
+		                  case 2:
+		                      	printf("edit the  device name\n");
+		                       	read(newsockfd,buff,255);
+                            name2[3]=&buff[3];
+		                      	fprintf(fp1,"%d %d %s %s\n",id,no,name2[3],location);
+	                   	break;
+	                  	case 3:
+			                      printf("edit the  device location\n");
+		                      	read(newsockfd,buff,255);
+			                      location2[30]=&buff[30];
+			                      fprintf(fp1,"%d %d %s %s\n",id,no,name,location2[30]);
+	                  	break;
+		                  case 4:
+		                      	printf("edit all the information\n");
+		                       	read(newsockfd,buff,255);
+		                      	no1=buff[2];
+		                      	name2[3]=&buff[3];
+			                      location2[30]=&buff[30];
+		                      	fprintf(fp1,"%d %d %s %s\n",id1,no1,name2[3],location2[30]);
+	                   break;
+	                 	case 5:
+			                    printf("you enter defult choice");
+		                      break;
+	                       }
+      	          }
+	        else
+           {
+	    	  fprintf(fp1,"%d %d %s %s\n",id,no,name,location);
+      	   }
+        }
+		
+         if(f==0)
+	        {
+	      printf("id not found\n");
+	        }
+      	fclose(fp);
+      	fclose(fp1);
+	      remove("base.txt");
+	      rename("mm.txt","base.txt");
+	      remove("mm.txt");
+    }
+else if(command==4)
+{	
+	printf("remove device data\n");
+
+	read(newsockfd,buff,255);
+	
+	id1=buff[1];
+
+	printf("enter id is %d:",id1);
+
+ 	fp=fopen("base.txt","r");
+
+	fp1=fopen("mm.txt","a");
+
+       while(fscanf(fp,"%d %d %s %s",&id,&no,name,location)!=EOF)
+	     {
+	       if(id==id1)
+            {
+	         	f=1;
+	          }
+		      else
+		      {
+		      fprintf(fp1,"%d %d %s %s\n",id,no,name,location);
+		      }
+	     }
+	 if(f==0)
+	  {
+  	printf("id not found\n");
+	  }
+	fclose(fp);
+	fclose(fp1);
+	remove("base.txt");
+	rename("mm.txt","base.txt");
+	remove("mm.txt");
+}
+	
+else
+{
+	printf(" exit successfully");
+}
+}
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
