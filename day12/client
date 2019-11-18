@@ -105,7 +105,7 @@ scanf("%d",&deviceid);
 packet[sid]=deviceid;
 printf("enter\ni=1.for edit device no\n2.for edit attributeid \n3.edit name\n4.for edit location \n5.edit all\n");
 scanf("%d",&i);
-packet[115]=i;
+packet[90]=i;
   switch(i)
   {
   case 1:
