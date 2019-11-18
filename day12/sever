@@ -130,7 +130,7 @@ fp1=fopen("mm.txt","a");
 		f=1;
 		int i;
 		read(newsockfd,buff,255);
-		i=buff[115];
+		i=buff[90];
 		
 		switch(i)
 		{
