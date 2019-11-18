@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -72,8 +73,6 @@ write(sockfd,packet,255);
 
 if(choice==1)
 {
-
-	
 	printf("add the info\n");
 
 	printf("enter the device id:\n");
@@ -104,7 +103,6 @@ if(choice==1)
 }
 else if(choice==2)
 {
-
         printf("enter the device id which one you want see:\n");
 
 	scanf("%d",&deviceid);
@@ -122,7 +120,6 @@ else if(choice==2)
 	printf("%s",buffer);
 				
 	close (sockfd);
-
 }
 
 else if(choice==3)
@@ -215,10 +212,9 @@ else if(choice==3)
 
 	defult:
 
-	        printf("you enter wrong choice");
+	     printf("you enter wrong choice");
 
 	break;
-
    } 
  
 }
