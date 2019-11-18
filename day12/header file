@@ -1,0 +1,12 @@
+//command size is 1byte
+#define c 0
+// device id size is 1byte
+#define sid 8
+// device no size is 1byte
+#define sd 16
+// device attribute size is 
+#define sat 24
+// name size is 30bits
+#define sn 32
+//location size is 30bits
+#define sl 62
