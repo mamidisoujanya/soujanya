@@ -96,7 +96,7 @@ if(choice==1)
 
 	printf("enter location length should be less than 30:\n");
 
-	scanf("%29s",&packet[30]); 
+	scanf("%19s",&packet[30]); 
 
 	write(sockfd,packet,255);
 
@@ -165,7 +165,7 @@ else if(choice==3)
 
       	  printf("enter device name length should be less than 30:\n");
 
-	        scanf("%29s",&packet[3]);
+	        scanf("%19s",&packet[3]);
 
 	        write(sockfd,packet,255);
 
@@ -179,7 +179,7 @@ else if(choice==3)
 	case 3:
 	          printf("enter location length should be less than 30:\n");
 
-	          scanf("%29s",&packet[30]); 
+	          scanf("%19s",&packet[30]); 
 	
 	           write(sockfd,packet,255);
 
@@ -198,11 +198,11 @@ else if(choice==3)
 	
 	         	printf("enter device name length should be less than 30:\n");
 
-	        	scanf("%29s",&packet[3]);
+	        	scanf("%19s",&packet[3]);
 
 		        printf("enter location length should be less than 30:\n");
 
-		        scanf("%29s",&packet[30]);
+		        scanf("%19s",&packet[30]);
 
 	        	write(sockfd,packet,255);
 
