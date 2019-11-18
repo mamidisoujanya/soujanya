@@ -94,7 +94,7 @@ if(choice==1)
 
 	//packet[3]=string;
 
-	printf("enter location length should be less than 30:\n");
+	printf("enter location length should be less than 20:\n");
 
 	scanf("%19s",&packet[30]); 
 
@@ -163,7 +163,7 @@ else if(choice==3)
 	break;
 	case 2:
 
-      	  printf("enter device name length should be less than 30:\n");
+      	  printf("enter device name length should be less than 20:\n");
 
 	        scanf("%19s",&packet[3]);
 
@@ -177,7 +177,7 @@ else if(choice==3)
 
 	break;
 	case 3:
-	          printf("enter location length should be less than 30:\n");
+	          printf("enter location length should be less than 20:\n");
 
 	          scanf("%19s",&packet[30]); 
 	
@@ -196,11 +196,11 @@ else if(choice==3)
 	
 		        packet[2]=deviceno;
 	
-	         	printf("enter device name length should be less than 30:\n");
+	         	printf("enter device name length should be less than 20:\n");
 
 	        	scanf("%19s",&packet[3]);
 
-		        printf("enter location length should be less than 30:\n");
+		        printf("enter location length should be less than 20:\n");
 
 		        scanf("%19s",&packet[30]);
 
