@@ -135,10 +135,7 @@ fp1=fopen("mm.txt","a");
 	            	location2[30]=&buff[30];	                      
 	            	fprintf(fp1,"%d %d %s %s\n",id1,no1,name2[3],location2[30]);                      	
 	break;                   
-	default:                	
-		           printf("you enter defult choice");	                   
-	break;	                      
-	  }
+	}
   }
    else
      {
@@ -190,7 +187,7 @@ remove("mm.txt");
 if(command!=5)
 goto S;
      
-Q:	printf("exit");  
+Q:	 
 	close(newsockfd);
         close(sockfd);
 return 0;
