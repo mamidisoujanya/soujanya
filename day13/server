@@ -94,7 +94,7 @@ fclose(fp);
 else if(command==3)
 {
 printf("edit the data\n");
-char *name2[20],*location2[20];
+char *name2[1],*location2[1];
 read(newsockfd,buff,255);
 id1=buff[1];
 printf("enter id is %d:",id1);
@@ -110,30 +110,30 @@ fp1=fopen("mm.txt","a");
 	switch(i)
    {
  	case 1:
-	          	  printf("edit the device no\n");
+	         printf("edit the device no\n");
                	read(newsockfd,buff,255);
                 no1=buff[2];
                 fprintf(fp1,"%d %d %s %s\n",id,no1,name,location);
 	break;
 	case 2:
-          	     printf("edit the  device name\n");
-		            read(newsockfd,buff,255);
-                name2[3]=&buff[3];
-	            	fprintf(fp1,"%d %d %s %s\n",id,no,name2[3],location);
-  break;
-  case 3:
+          	     	printf("edit the  device name\n");
+		     	read(newsockfd,buff,255);
+               		 name2[0]=&buff[3];
+	            	fprintf(fp1,"%d %d %s %s\n",id,no,name2[0],location);
+  	break;
+  	case 3:
 	            	printf("edit the  device location\n");
-                read(newsockfd,buff,255);
-		            location2[30]=&buff[30];	                      
-		            fprintf(fp1,"%d %d %s %s\n",id,no,name,location2[30]);	                      
+          		 read(newsockfd,buff,255);
+		            location2[0]=&buff[30];	                      
+		            fprintf(fp1,"%d %d %s %s\n",id,no,name,location2[0]);	                      
 	break;                  	
 	case 4:	                  
-		            printf("edit all the information\n");                      	
+		          printf("edit all the information\n");                      	
 		            read(newsockfd,buff,255);                       
 	            	no1=buff[2];                      	
-	            	name2[3]=&buff[3];                      	
+	            	name2[0]=&buff[3];                      	
 	            	location2[30]=&buff[30];	                      
-	            	fprintf(fp1,"%d %d %s %s\n",id1,no1,name2[3],location2[30]);                      	
+	            	fprintf(fp1,"%d %d %s %s\n",id1,no1,name2[0],location2[0]);                      	
 	break;                   
 	}
   }
