@@ -69,7 +69,7 @@ scanf("%d",&choice);
 
 packet[0]=choice;
 
-write(sockfd,packet,255);
+write(sockfd,packet,8);
 
 if(choice==1)
 {
