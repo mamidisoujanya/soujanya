@@ -66,7 +66,7 @@ int id,id1;
 int no,no1,f=0;
 char name[20],location[20];
 
-read(newsockfd,buff,255);
+read(newsockfd,buff,8);
 command=buff[0];
 
 if(command==1)
