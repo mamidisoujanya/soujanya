@@ -105,8 +105,6 @@ else if(command==3)
 {
 printf("edit the data\n");
 char str[100],pp[20];
-int id,no;
-char name[20],location[20];
 fp=fopen("base.txt","r+");
 fp1=fopen("mm.txt","a");
 char s=buff[1];
@@ -115,51 +113,47 @@ printf("att%d:",attid);
 
 while(fgets(str,100,fp)!=NULL)
 {
-     
-  
-	if(str[0]==s+'0')
-	{
-	f=1;
-	//printf("f %d",f);
+ if(str[0]==s+'0')
+{
+f=1;
+
 	if(attid==1)
 	{
-	fprintf(fp1,"%d %d %s %s",str[1],buff[3],&str[4],&str[30]);
-		fseek(fp,5,SEEK_SET);
-		//fputs(pp,fp);
-		//fgets(pp,2,fp);
-		//strcpy(pp,buff);
+	pp[0]=buff[3];	
+	//fprintf(fp1,"%d %d %s %s",str[1],buff[3],&str[4],&str[30]);
+	fseek(fp,3,SEEK_SET);
+	fputs(pp,fp);	
 	}
-		//fputs(buff[2],fp);
+		
 	else if(attid==2)
 	{
-	f=1;
-	//pp=buff;
-	strcpy(pp,buff);
-	fseek(fp,5,SEEK_SET);
+	pp[20]=buff[4];
+	fseek(fp,4,SEEK_SET);
 	fputs(pp,fp);
-	//fprintf(fp1,"%d %d %s %s",str[1],str[3],&buff[4],str+30);
 	}
 	else if(attid==3)
 	{
-	fprintf(fp,"%s\n",&buff[3]);
+	pp[20]=buff[30];
+	fseek(fp,24,SEEK_SET);
+	fputs(pp,fp);
 	}
 	else if(attid==4)
 	{
-	//printf("f %d",f);
-	fprintf(fp1,"%d %d %s %s",buff[1],buff[3],&buff[4],&buff[30]);
-	
+	fseek(fp,0,SEEK_SET);
+	fputs(buff,fp);
+	break;
 	}
 	}
-else{
-fputs(str,fp1);
-}
-  l++;
-printf("l %d\n",l);
+	else
+	{
+	fputs(str,fp);
+	}
+ l++;
 }
 if(f==0)
-   {
-   write(newsockfd,"id not found",20);
-   }
+{
+write(newsockfd,"id not found",20);
+}
 fclose(fp);
 fclose(fp1);
 //remove("base.txt");
