@@ -1,0 +1,181 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <ctype.h>
+#include<arpa/inet.h>
+#include "newheader.h"
+
+void adddevice();
+
+
+ int main(int argc,char *argv[])
+ {
+ int sockfd,newsockfd,portno,n;
+ socklen_t clilen;
+ char buff[50];
+ pid_t childpid;
+ struct sockaddr_in servaddr,cliaddr;
+ if(argc<2)
+ {
+ fprintf(stderr,"error no port provided\n");
+ exit(1);
+ }
+
+ sockfd=socket(AF_INET,SOCK_STREAM,0);
+ if(sockfd<0)
+ perror("error opening file");
+
+ memset(&servaddr,'\0',sizeof(servaddr));
+ portno=atoi(argv[1]);
+ servaddr.sin_family=AF_INET;
+ servaddr.sin_addr.s_addr=INADDR_ANY;
+ servaddr.sin_port=htons(portno);
+ if(bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr))<0)
+ perror("error in binding");
+
+ listen(sockfd,5);
+
+ clilen=sizeof(cliaddr);
+ newsockfd=accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
+ if(newsockfd<0)
+ {
+ perror("error on accept");
+ }
+
+ FILE *fp ,*fp1;
+ int command,attid;
+ long int pos;
+ int f=0,l=0,d;
+ char str[1];
+ read(newsockfd,buff,50);
+ command=buff[0];
+ attid=buff[2];
+
+if(command==1)
+ {
+ static int i;
+ printf("add the data\n");
+ fp=fopen("base.txt","a");
+	
+	str[1]=buff[1];
+	strcpy(dname,&buff[4]); 
+	strcpy(dlocation,&buff[27]); 
+
+	if(i==0)
+	{
+	fseek(fp,0,SEEK_SET);
+	}
+	else
+	{
+	fseek(fp,i*OFFSET,SEEK_SET);
+	}  
+	pos=ftell(fp);
+	fwrite(str,2,1,fp);
+	fseek(fp,pos+4,SEEK_SET);
+	fwrite(dname,sizeof(dname),1,fp);
+
+	fseek(fp,pos+27,SEEK_SET);
+	fwrite(dlocation,sizeof(dlocation),1,fp);
+ i++;
+ fclose(fp);
+ }
+	
+ else if(command==2)
+ {
+ printf("displaying the data\n");
+    char data[50];
+    int pos,did1,k;
+    char dn[SIZE],dl[SIZE];
+    
+    k=buff[1];
+    fp=fopen("base.txt","r");
+    pos=(k-1)*OFFSET;
+    fseek(fp,pos,SEEK_SET);
+    fread(&did1,sizeof(did1),1,fp);
+    data[1]=did1;
+
+    fseek(fp,pos+4,SEEK_SET);
+    fread(dn,sizeof(dn),1,fp);
+    strcpy(&data[4],dn);
+
+    fseek(fp,pos+27,SEEK_SET);
+    fread(dl,sizeof(dl),1,fp);
+    strcpy(&data[27],dl);
+
+   write(newsockfd,data,sizeof(data)); 
+ }
+ 
+ else if(command==3)
+ {
+ printf("edit the data\n");
+ fp=fopen("base.txt","r+");
+ int s=buff[1];
+ printf("enter id is %d:",s);  
+ printf("att %d:",attid);
+
+ pos=(s-1)*OFFSET;
+
+	if(attid==1)
+	{
+	fseek(fp,pos+4,SEEK_SET);
+	fwrite(dname,sizeof(dname),1,fp);
+	}
+		
+	else if(attid==2)
+	{
+	fseek(fp,pos+27,SEEK_SET);
+	fwrite(dlocation,sizeof(dlocation),1,fp);
+	}
+	else if(attid==3)
+	{
+	fseek(fp,pos+4,SEEK_SET);
+	fwrite(dname,sizeof(dname),1,fp);
+
+	fseek(fp,pos+27,SEEK_SET);
+	fwrite(dlocation,sizeof(dlocation),1,fp);
+	}
+	
+ fclose(fp);
+ }
+ 
+else if(command==4)
+{  
+ printf("remmove the data\n");
+
+ fp=fopen("base.txt","r");
+ fp1=fopen("mm.txt","a");
+ char data[50];
+ char c=buff[1];
+ while(fgets(data,50,fp)!=NULL)
+ {
+     	if(data[0]==c+'0')
+	{
+        f=1;
+	}
+	else
+	{
+	fputs(data,fp1);
+	}
+ l++;
+ } 
+ if(f==0)
+ {
+ write(newsockfd,"id not found",20);
+ }
+ fclose(fp);
+ fclose(fp1);
+ rename("mm.txt","base.txt");
+ }
+ return 0;
+ }
+
+
+
+
+
+
